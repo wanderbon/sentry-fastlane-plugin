@@ -20,6 +20,7 @@ module Fastlane
         ]
         command += sourcemaps
 
+        command.push('--debug-id-reference') if params[:debug_id_reference]
         command.push('--rewrite') if params[:rewrite]
         command.push('--no-rewrite') unless params[:rewrite]
         command.push('--strip-prefix').push(params[:strip_prefix]) if params[:strip_prefix]
@@ -100,6 +101,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :strip_common_prefix,
                                        conflicting_options: [:strip_prefix],
                                        description: "Automatically guess what the common prefix is and chop that one off",
+                                       default_value: false,
+                                       is_string: false,
+                                       optional: true),
+          FastlaneCore::ConfigItem.new(key: :debug_id_reference,
+                                       description: "Set true if hermes",
                                        default_value: false,
                                        is_string: false,
                                        optional: true),
